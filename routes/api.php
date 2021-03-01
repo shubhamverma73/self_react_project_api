@@ -21,4 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'Rso_users@login_in');
 Route::post('logout', 'Rso_users@logout');
 Route::post('dashboard', 'Dashboard@index');
-Route::post('retailer_list', 'Rso_users@get_retailer_list');
+Route::post('rso_list', 'Rso_users@get_rso_list');

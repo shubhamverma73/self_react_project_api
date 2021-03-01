@@ -72,17 +72,27 @@ class Rso_users extends Controller
     	}
     }
 
-    function get_retailer_list(Request $request) {
+    function get_rso_list(Request $request) {
         $get = json_decode($request->getContent());
 
         $username   = blank_check($get->username, 'Username');
         $token      = blank_check($get->token, 'Token');
+        $start_date = $get->start_date;
+        $end_date   = $get->end_date;
 
         // ======== Authenticate =============
         authenticate($username, $token);
         // ======== Authenticate =============
 
-        $data = Rso_user::where('status', 'Approved')->get();
+        $query = Rso_user::query();
+        $query = $query->where('status', 'Approved');
+        if (!empty($start_date)) {
+            $query = $query->where('date', '>=', $start_date);
+        }
+        if (!empty($end_date)) {
+          $query = $query->where('date', '<=', $end_date);
+        }
+        $data = $query->get();
 
         if(!empty($data)) {
 
