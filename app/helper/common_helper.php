@@ -387,7 +387,7 @@ function posted_ago($datetime, $full = false) {
 }
 
 
-function debug($item = array(), $die = true, $display = true) {
+function debugs($item = array(), $die = true, $display = true) {
 	if( is_array($item) || is_object($item) ) {
 		echo "<pre ".($display?'':'style="display:none"').">"; print_r($item); echo "</pre>";
 	} else {

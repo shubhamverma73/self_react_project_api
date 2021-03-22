@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Rso_user;
 use Mail;
 use App\Mail\WelcomeEmail;
+use App\Mail\AccountCreated;
 use DB;
 
 class Rso_users extends Controller
@@ -165,6 +166,74 @@ class Rso_users extends Controller
         }
     }
 
+    function add_rso(Request $request) {
+        $get = json_decode($request->getContent());
+
+        $username   = blank_check($get->username, 'Username');
+        $name       = blank_check($get->name, 'Name');
+        $role       = blank_check($get->role, 'Role');
+        $email      = blank_check($get->email, 'Email');
+        $password   = blank_check($get->password, 'Password');
+        $mobile     = blank_check($get->mobile, 'Mobile');
+        $zone       = blank_check($get->zone, 'Zone');
+        $state      = blank_check($get->state, 'State');
+        $city       = blank_check($get->city, 'City');
+        $address    = blank_check($get->address, 'Address');
+        $pincode    = blank_check($get->pincode, 'Pincode');
+
+        // ===== Check user Present ==========
+        isUserExists($username, $email);
+        // ===== Check user Present ==========
+
+        if(!empty($username)) {
+
+            $user           = new Rso_user;
+            $user->username = $get->username;
+            $user->rsm_name = '';
+            $user->rsm_code = '';
+            $user->rsm_email= '';
+            $user->asm_name = 'Sanjay Mittal';
+            $user->asm_code = 'OHS147';
+            $user->asm_email= 'sanjay.mittal@omron.com';
+            $user->rso_code = mt_rand(1000000, 9999999);
+            $user->name     = $get->name;
+            $user->email    = $get->email;
+            $user->role     = $get->role;
+            $user->type     = 'FSO';
+            $user->mobile   = $get->mobile;
+            $user->password = $get->password;
+            $user->city     = $get->city;
+            $user->state    = $get->state;
+            $user->zone     = $get->zone;
+            $user->address  = $get->address;
+            $user->pincode  = $get->pincode;
+            $user->date     = date('Y-m-d');
+            $user->status   = 'Approved';
+            $user->device_token= '';
+            $user->token   = '';
+            $user->create_datetime=date('Y-m-d H:i:s');
+            $user->save();
+
+            $user_id        = $user->id;
+            if(!empty($user_id)) {
+
+                // ==================== Send confirmation mail to registered user ====================
+                $return_array = ['name'=>$get->name, 'email'=>$get->email, 'username'=>$get->username];
+                Mail::to($get->email)->send(new AccountCreated($return_array));
+                // ==================== Send confirmation mail to registered user ====================
+
+                http_response_code(200);
+                return array('status'=>'2', 'data'=>'', 'message'=>'User added successfully. User-id: '.$user_id);
+            } else {
+                http_response_code(401);
+                return array('status'=>'1', 'data'=>'', 'message'=>'User not added, try again.');
+            }
+        } else {
+            http_response_code(401);
+            return array('status'=>'1', 'data'=>'', 'message'=>'Data not found');
+        }
+    }
+
     function edit_rso(Request $request) {
         $get = json_decode($request->getContent());
 
@@ -209,6 +278,28 @@ class Rso_users extends Controller
                 http_response_code(401);
                 return array('status'=>'1', 'data'=>'', 'message'=>'User not updated, try again.');
             }
+        } else {
+            http_response_code(401);
+            return array('status'=>'1', 'data'=>'', 'message'=>'Data not found');
+        }
+    }
+
+    function downloadCSV(Request $request) {
+        $get = json_decode($request->getContent());
+
+        $username   = blank_check($get->username, 'Username');
+        $token      = blank_check($get->token, 'Token');
+
+        // ======== Authenticate =============
+        authenticate($username, $token);
+        // ======== Authenticate =============
+
+        $csvData = Rso_user::select('username', 'asm_name', 'asm_code', 'asm_email', 'rso_code', 'name', 'email', 'mobile', 'role', 'type', 'zone', 'state', 'city', 'address', 'pincode', 'status', 'date')
+                           ->get();
+
+        if(!empty($csvData)) {
+            http_response_code(200);
+            return array('status'=>'2', 'data'=>$csvData, 'message'=>'');
         } else {
             http_response_code(401);
             return array('status'=>'1', 'data'=>'', 'message'=>'Data not found');

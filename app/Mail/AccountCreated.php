@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeEmail extends Mailable //implements ShouldQueue ##Queueing By Default
+class AccountCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +29,9 @@ class WelcomeEmail extends Mailable //implements ShouldQueue ##Queueing By Defau
      */
     public function build()
     {
-        //return $this->markdown('email.welcome', ['data' => $return_array] );
-        return $this->from('reactapp@gmail.com', 'Reat App')->subject('Your Account Created')->view('email.welcome', ['data' => $this->return_array]); //->attach('/path/to/file') 
+        return $this->view('email.accountcreate', ['data' => $this->return_array])
+                    ->from('reactapp@gmail.com', 'Reat App')
+                    ->subject('Your Account Created')
+                    ->replyTo('reactapp@gmail.com', 'Reat App');
     }
 }

@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rso_user extends Model
+class TicketModel extends Model
 {
     use HasFactory;
 
-    protected $table 		= 'rso_user';
+    protected $table 		= 'ticket';
     protected $primaryKey 	= 'id';
     public $timestamps 		= false;
     const CREATED_AT 		= 'timestamp';
 
-    /*public function setNameAttribute($value) {
-    	return $this->attributes('name') = ucfirst($value); //This function is called mutator where we can change value behaviour
-    }*/
-
-    public function getRoleAttribute($value)
+    public function getTypeAttribute($value)
     {
         return strtoupper($value); //Accessors is called when we get value from table
+    }
+
+    public function getUserTypeAttribute($value) {
+    	return strtoupper($value);
     }
 }

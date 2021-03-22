@@ -79,4 +79,26 @@ function authenticate($username, $token) {
     	exit(json_encode(array('status'=>'1', 'data'=>'', 'message'=>'Authentication failed')));
     }
 }
+
+function isUserExists($username, $email) {
+	if( empty($username) ) {
+		return array('status'=>'0', 'data'=>'', 'message'=>'Userename can not be null');
+	}
+	if( empty($email) ) {
+		return array('status'=>'0', 'data'=>'', 'message'=>'Email can not be null');
+	}
+	$query = DB::table('rso_user')
+                ->select('id')
+                ->where('username', $username)
+                ->orWhere('email', $email)
+    			->first();
+
+    if(!empty($query->id)) {
+    	http_response_code(401);
+    	exit(json_encode(array('status'=>'1', 'data'=>'', 'message'=>'User already exists.')));
+    } else {
+    	http_response_code(200);
+    	return true;
+    }
+}
 ?>
