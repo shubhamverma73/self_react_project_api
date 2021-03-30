@@ -34,11 +34,19 @@ Route::post('city-list', 'Citylist@getCityList');
 Route::post('rso-csv-download', 'Rso_users@downloadCSV');
 Route::get('mailable_check', 'Rso_users@mailable_check');
 
+
 Route::post('tickets', 'Ticket@index');
 Route::post('ticket-csv-download', 'Ticket@downloadCSV');
 Route::post('view_ticket', 'Ticket@view_ticket');
 Route::post('ticket_count', 'Ticket@group_by_ticket_count');
 Route::post('edit_ticket', 'Ticket@edit_ticket');
+
+
+Route::post('stores', 'Stores@index');
+Route::post('store-csv-download', 'Stores@downloadCSV');
+Route::post('view_store', 'Stores@view_store');
+Route::post('edit_store', 'Stores@edit_store');
+Route::post('store-csv-download', 'Stores@downloadCSV');
 
 Route::get('/email', function() {
 	$return_array = ['name'=>'Shubham', 'email'=>'shubham@gmail.com', 'username'=>'shubhamv'];

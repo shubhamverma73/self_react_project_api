@@ -307,8 +307,8 @@ class Rso_users extends Controller
     }
 
     function mailable_check() {
-        $return_array = ['name'=>'Shubham', 'email'=>'shubham@gmail.com'];
-        Mail::to('shubham@gmail.com')->send(new WelcomeEmail($return_array)); //->cc($moreUsers)  ->bcc($evenMoreUsers)
+        $return_array = ['name'=>'Shubham', 'email'=>'shubham.triadweb@gmail.com'];
+        Mail::to('shubhamkrverma73@gmail.com')->send(new WelcomeEmail($return_array)); //->cc($moreUsers)  ->bcc($evenMoreUsers)
         //->queue(new OrderShipped($return_array));
     }
 }

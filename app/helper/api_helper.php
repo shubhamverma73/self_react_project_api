@@ -8,17 +8,15 @@ function set_json_header(){
 function blank_check($var, $name='') {
 	if( !empty($name) ){
 		if( empty($var) && $var!='0' ) {
-			set_json_header();
-			echo json_encode(array('status'=>'0', 'data'=>'', 'message'=>"".$name." Can not be null"));
-			exit;
+			http_response_code(401);
+    		exit(json_encode(array('status'=>'1', 'data'=>'', 'message'=>"".$name." Can not be null")));
 		}  else {
 			return $var;
 		}
 	} else {
 		if( empty($var) ) {
-			set_json_header();
-			echo json_encode(array('status'=>'0', 'data'=>'', 'message'=>"Check Your Input."));
-			exit;
+			http_response_code(401);
+    		exit(json_encode(array('status'=>'1', 'data'=>'', 'message'=>"Check you input value")));
 		} else {
 			return $var;
 		}

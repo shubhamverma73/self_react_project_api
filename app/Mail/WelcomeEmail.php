@@ -30,6 +30,6 @@ class WelcomeEmail extends Mailable //implements ShouldQueue ##Queueing By Defau
     public function build()
     {
         //return $this->markdown('email.welcome', ['data' => $return_array] );
-        return $this->from('reactapp@gmail.com', 'Reat App')->subject('Your Account Created')->view('email.welcome', ['data' => $this->return_array]); //->attach('/path/to/file') 
+        return $this->from('shubham.triadweb@gmail.com', 'Reat App')->subject('Your Account Created')->view('email.welcome', ['data' => $this->return_array]); //->attach('/path/to/file') 
     }
 }

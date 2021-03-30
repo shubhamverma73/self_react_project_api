@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TicketModel;
-use Mail;
 use DB;
 
 class Ticket extends Controller

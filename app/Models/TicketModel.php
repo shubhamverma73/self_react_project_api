@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TicketModel extends Model
 {
     use HasFactory;
-
     protected $table 		= 'ticket';
     protected $primaryKey 	= 'id';
     public $timestamps 		= false;
