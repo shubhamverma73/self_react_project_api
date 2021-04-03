@@ -108,7 +108,7 @@ function set_value($field, $value, $table, $where_value, $where_cond = 'id') {
 	return $result;
 }
 
-function get_row($table, $id, $where='id') {
+/*function get_row($table, $id, $where='id') {
 	$CI =& get_instance();
 	$CI->db->from($table);
 	$CI->db->where($where, $id);
@@ -118,7 +118,7 @@ function get_row($table, $id, $where='id') {
 		return $result;
 	}
 	return false;
-}
+}*/
 
 
 function get_table($table, $where_value ='', $where ='', $where_value1 ='', $where1 ='') {

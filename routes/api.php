@@ -43,10 +43,16 @@ Route::post('edit_ticket', 'Ticket@edit_ticket');
 
 
 Route::post('stores', 'Stores@index');
-Route::post('store-csv-download', 'Stores@downloadCSV');
 Route::post('view_store', 'Stores@view_store');
 Route::post('edit_store', 'Stores@edit_store');
 Route::post('store-csv-download', 'Stores@downloadCSV');
+
+
+Route::post('targets', 'Targets@index');
+Route::post('view_target', 'Targets@view_target');
+Route::post('edit_target', 'Targets@edit_target');
+Route::post('target-csv-download', 'Targets@downloadCSV');
+Route::post('upload-targets', 'Targets@upload_targets');
 
 Route::get('/email', function() {
 	$return_array = ['name'=>'Shubham', 'email'=>'shubham@gmail.com', 'username'=>'shubhamv'];
